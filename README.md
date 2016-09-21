@@ -65,4 +65,4 @@ to build custom bundles for your app.
 
 License
 ------------------------------------------------------------------------------
-chai-files is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
