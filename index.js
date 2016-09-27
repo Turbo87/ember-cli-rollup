@@ -37,26 +37,26 @@ module.exports = {
 
     // iterate over rollup modules
     modules.forEach(function(module) {
-      var moduleOptions = options[module];
+      let defaultModuleOptions = {
+        entry: module + '.js',
+        dest: 'rollup/' + module + '.js',
+        format: 'amd',
+        moduleId: 'rollup/' + module,
+        sourceMap: true,
+        plugins: [],
+      };
+
+      var moduleOptions = Object.assign({}, defaultModuleOptions, options[module]);
 
       // apply `node-resolve` rollup plugin unless specifically disabled
-      var rollupPlugins = [];
       if (!moduleOptions.nodeResolve || moduleOptions.nodeResolve.disabled !== true) {
         var nodeResolve = require('rollup-plugin-node-resolve');
-        rollupPlugins.push(nodeResolve(moduleOptions.nodeResolve));
+        moduleOptions.plugins.push(nodeResolve(moduleOptions.nodeResolve));
+        delete moduleOptions.nodeResolve;
       }
 
       // create rollup tree for the module
-      var moduleTree = new Rollup(rollupTree, {
-        rollup: {
-          entry: module + '.js',
-          dest: 'rollup/' + module + '.js',
-          format: 'amd',
-          moduleId: 'rollup/' + module,
-          sourceMap: true,
-          plugins: rollupPlugins
-        }
-      });
+      var moduleTree = new Rollup(rollupTree, { rollup: moduleOptions });
 
       trees.push(moduleTree);
     });
