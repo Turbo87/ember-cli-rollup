@@ -57,7 +57,7 @@ to build custom bundles for your app.
 
 4.  Use the custom bundle by importing from `rollup/d3` (or using relative
     paths to the entry point file to take advantage of IDE integration)
-    
+
     ```js
     import { scaleLinear } from 'rollup/d3';
     ```
